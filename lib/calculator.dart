@@ -61,33 +61,33 @@ class _CalculatorPageState extends State<CalculatorPage> {
     "Hg": double.negativeInfinity,
   };
 
-  late final Map entries = {
-    "Cr": HMEntry(
+  late final List<HMEntry> entries = [
+    HMEntry(
       text: "Chromium (Cr)",
       onValueChanged: (double? value) =>
           concentrations["Cr"] = value ?? double.negativeInfinity,
     ),
-    "Cd": HMEntry(
+    HMEntry(
       text: "Cadmium (Cd)",
       onValueChanged: (double? value) =>
           concentrations["Cd"] = value ?? double.negativeInfinity,
     ),
-    "Pb": HMEntry(
+    HMEntry(
       text: "Lead (Pb)",
       onValueChanged: (double? value) =>
           concentrations["Pb"] = value ?? double.negativeInfinity,
     ),
-    "As": HMEntry(
+    HMEntry(
       text: "Arsenic (As)",
       onValueChanged: (double? value) =>
           concentrations["As"] = value ?? double.negativeInfinity,
     ),
-    "Hg": HMEntry(
+    HMEntry(
       text: "Mercury (Hg)",
       onValueChanged: (double? value) =>
           concentrations["Hg"] = value ?? double.negativeInfinity,
     ),
-  };
+  ];
 
   final List indices = ["HPI", "CI", "HEI"];
 
@@ -99,9 +99,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
       body: Center(
         child: Column(
           children: [
-            Expanded(
-              child: ListView(children: entries.values.cast<Widget>().toList()),
-            ),
+            // TODO -> Add Location
+            Expanded(child: ListView(children: entries)),
             ElevatedButton(
               onPressed: () {
                 setState(() {
@@ -110,24 +109,28 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   results["HEI"] = hei(concentrations);
                 });
               },
-              child: Text("Calculate"),
+              child: const Text("Calculate"),
             ),
             Card(
               child: Column(
                 children: [
                   for (String text in indices)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            "$text: ${results[text] != null ? results[text]!.toStringAsFixed(2) : ""}",
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "$text: ${results[text] != null ? results[text]!.toStringAsFixed(2) : ""}",
+                            ),
                           ),
                         ),
                       ),
                     ),
+                  // TODO -> Add upload button
                 ],
               ),
             ),
@@ -155,8 +158,6 @@ class HMEntry extends StatefulWidget {
 }
 
 class _HMEntryState extends State<HMEntry> {
-  var prev = "";
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -176,9 +177,12 @@ class _HMEntryState extends State<HMEntry> {
         ),
         Expanded(
           child: TextField(
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.numberWithOptions(
+              signed: false,
+              decimal: true,
+            ),
             controller: widget.myController,
-            decoration: InputDecoration(suffixText: "mg/L"),
+            decoration: const InputDecoration(suffixText: "mg/L"),
             onChanged: (text) => widget.onValueChanged(double.tryParse(text)),
           ),
         ),

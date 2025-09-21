@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jal_raksha/calculator.dart';
 import 'package:provider/provider.dart';
-import 'package:material_charts/material_charts.dart';
+
+import 'calculator.dart';
+import 'dashboard.dart';
 
 void main() {
   runApp(JalRaksha());
@@ -49,8 +50,8 @@ class _HomeState extends State<Home> {
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-            leading: Icon(Icons.water_drop),
-            title: Text("Jal Raksha"),
+            leading: const Icon(Icons.water_drop),
+            title: const Text("Jal Raksha"),
             actions: [
               IconButton(
                 onPressed: () {},
@@ -65,7 +66,7 @@ class _HomeState extends State<Home> {
             ],
           ),
           bottomNavigationBar: NavigationBar(
-            destinations: [
+            destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.dashboard),
                 label: 'Dashboard',
@@ -74,9 +75,11 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.calculate),
                 label: 'HMPI Calc',
               ),
-              NavigationDestination(icon: Icon(Icons.add), label: 'Add Data'),
               NavigationDestination(icon: Icon(Icons.map), label: 'Map'),
-              NavigationDestination(icon: Icon(Icons.upload), label: 'Export'),
+              NavigationDestination(
+                icon: Icon(Icons.analytics),
+                label: 'Report',
+              ),
             ],
             selectedIndex: selectedIndex,
             onDestinationSelected: (value) {
@@ -85,59 +88,12 @@ class _HomeState extends State<Home> {
               });
             },
           ),
-          body: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: IndexedStack(index: selectedIndex, children: pages),
-                ),
-              ),
-            ],
+          body: Container(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: IndexedStack(index: selectedIndex, children: pages),
           ),
         );
       },
-    );
-  }
-}
-
-class DashBoardPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: Placeholder()),
-          // Expanded(
-          //   child: Row(
-          //     children: [
-          //       Expanded(child: Placeholder()),
-          //       Expanded(child: Placeholder()),
-          //       Expanded(child: Placeholder()),
-          //     ],
-          //   ),
-          // ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(child: Placeholder()),
-                Expanded(
-                  child: MaterialPieChart(
-                    data: [
-                      PieChartData(value: 62.5, label: 'High'),
-                      PieChartData(value: 25, label: 'Medium'),
-                      PieChartData(value: 12.5, label: 'Low'),
-                    ],
-                    width: double.maxFinite,
-                    height: double.maxFinite,
-                    style: PieChartStyle(showLegend: true),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
