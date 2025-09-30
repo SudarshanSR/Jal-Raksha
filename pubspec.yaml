@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   provider: ^6.1.5
   material_charts: ^0.0.34
+  maplibre_gl: ^0.22.0
+  geolocator: any
 
 dev_dependencies:
   flutter_test:

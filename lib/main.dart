@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'calculator.dart';
 import 'dashboard.dart';
+import 'map.dart';
 
 void main() {
   runApp(JalRaksha());
@@ -39,9 +40,8 @@ class _HomeState extends State<Home> {
   List<Widget> pages = [
     DashBoardPage(),
     CalculatorPage(),
-    InsertPage(),
-    MapPage(),
-    ExportPage(),
+    MapParentWidget(),
+    ReportPage(),
   ];
 
   @override
@@ -98,21 +98,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-class InsertPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Placeholder();
-  }
-}
-
-class MapPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Placeholder();
-  }
-}
-
-class ExportPage extends StatelessWidget {
+class ReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Placeholder();
